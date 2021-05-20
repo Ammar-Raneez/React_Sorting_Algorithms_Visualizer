@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { MergeSort } from '../utils/MergeSort'
+import { QuickSort } from '../utils/QuickSort'
 
 const Visualizer = () => {
     const [array, setArray] = useState([]);
@@ -30,7 +31,8 @@ const Visualizer = () => {
     }
 
     const quickSort = () => {
-
+        const sortedArray = QuickSort(array, 0, array.length-1);
+        console.log(sortedArray);
     }
 
     const bubbleSort = () => {
