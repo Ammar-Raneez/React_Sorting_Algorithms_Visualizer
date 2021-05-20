@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { MergeSort } from '../utils/MergeSort'
 
 const Visualizer = () => {
     const [array, setArray] = useState([]);
@@ -24,7 +25,8 @@ const Visualizer = () => {
     }
 
     const mergeSort = () => {
-
+        const sortedArray = MergeSort(array);
+        console.log(sortedArray);
     }
 
     const quickSort = () => {
