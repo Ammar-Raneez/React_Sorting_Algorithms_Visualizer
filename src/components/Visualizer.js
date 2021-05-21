@@ -5,6 +5,7 @@ import { MergeSort } from '../utils/MergeSort'
 import { QuickSort } from '../utils/QuickSort'
 import { BubbleSort } from '../utils/BubbleSort'
 import { SelectionSort } from '../utils/SelectionSort';
+import { InsertionSort } from '../utils/InsertionSort';
 
 const Visualizer = () => {
     const [array, setArray] = useState([]);
@@ -48,7 +49,8 @@ const Visualizer = () => {
     }
 
     const insertionSort = () => {
-        
+        const sortedArray = InsertionSort(array);
+        console.log(sortedArray);
     }
 
     return (
