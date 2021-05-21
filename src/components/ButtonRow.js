@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { MergeSort } from '../utils/MergeSort'
 import { QuickSort } from '../utils/QuickSort'
@@ -7,72 +7,80 @@ import { BubbleSort } from '../utils/BubbleSort'
 import { SelectionSort } from '../utils/SelectionSort';
 import { InsertionSort } from '../utils/InsertionSort';
 import { HeapSort } from '../utils/HeapSort';
+import { connect } from 'react-redux';
+import { setArray } from '../redux/actions/setArrayActions';
+import { setCurrentSorted } from '../redux/actions/alreadySortedActions';
+import { whichAlgorithm } from '../redux/reducers/whichAlgorithmReducer';
+import { setRunning } from '../redux/actions/isCurrentlyRunningActions';
 
-const ButtonRow = () => {
-    const [array, setArray] = useState([]);
+const ButtonRow = props => {
+    const {
+        array,
+        algorithm,
+        isRunning,
+        generateArray,
+        updateAlgorithm,
+        sort
+    } = props
 
     useEffect(() => {
-        resetArray();
+        generateArray(87);
     }, [])
 
-    const resetArray = () => {
-        const arr = [];
-        for (let i = 0; i < 400; i++) {
-            // value 1 is too small in displayed bar
-            arr.push(generateRandomInt(5, 500));
-        }
-
-        setArray(arr);
-    }
-
-    const generateRandomInt = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
-    const mergeSort = () => {
-        const sortedArray = MergeSort(array);
-        console.log(sortedArray);
-    }
-
-    const quickSort = () => {
-        const sortedArray = QuickSort(array, 0, array.length-1);
-        console.log(sortedArray);
-    }
-
-    const bubbleSort = () => {
-        const sortedArray = BubbleSort(array);
-        console.log(sortedArray);
-    }
-
-    const heapSort = () => {
-        const sortedArray = HeapSort(array);
-        console.log(sortedArray);
-    }
-
-    const selectionSort = () => {
-        const sortedArray = SelectionSort(array);
-        console.log(sortedArray);
-    }
-
-    const insertionSort = () => {
-        const sortedArray = InsertionSort(array);
-        console.log(sortedArray);
-    }
+    const speed = 570 - Math.pow(array.length, 2) > 0 ? 570 - Math.pow(array.length, 2) : 0;
+    // const color = isRunning ? "rgba(214, 29, 29, 0.8)" : "white";
+    // const cursor = isRunning ? "auto" : "pointer";
 
     return (
         <Container>
-            <Button onClick={resetArray}>New Array</Button>
-            <Button onClick={mergeSort}>Merge Sort</Button>
-            <Button onClick={quickSort}>Quick Sort</Button>
-            <Button onClick={heapSort}>Heap Sort</Button>
-            <Button onClick={bubbleSort}>Bubble Sort</Button>
-            <Button onClick={selectionSort}>Selection Sort</Button>
-            <Button onClick={insertionSort}>Insertion Sort</Button>
+            <Button onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
+            <Button onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
+            {
+                algorithm && <Button onClick={() => !isRunning && sort(algorithm, array, speed)}>Sort</Button>
+            }
         </Container>
     )
 }
 
-export default ButtonRow
+const mapStateToProps = state => ({
+    array: state.array,
+    algorithm: state.currentBubble,
+    isRunning: state.isRunning
+})
+
+const mapDispatchToProps = () => dispatch => ({
+    generateArray: (length) => {
+        let array = [];
+        while (array.length < length) {
+          array.push(Math.floor(Math.random() * 200) + 10);
+        }
+        dispatch(setArray(array));
+        dispatch(setCurrentSorted([]));
+    },
+    
+    updateAlgorithm: (algorithm) => {
+        dispatch(whichAlgorithm(algorithm));
+    },
+    
+    sort: (algorithm, array, speed) => {
+        let doSort = algorithm === "bubbleSort" ? BubbleSort 
+                            : algorithm === "insertionSort" ? InsertionSort 
+                                : algorithm === "selectionSort" ? SelectionSort 
+                                    : algorithm === "mergeSort" ? MergeSort 
+                                        : algorithm === "quickSort" ? QuickSort
+                                            : HeapSort;
+        dispatch(setCurrentSorted([]));
+        dispatch(setRunning(true));
+        doSort(array, dispatch, speed);
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonRow);
 
 const Container = styled.div `
     display: flex;
