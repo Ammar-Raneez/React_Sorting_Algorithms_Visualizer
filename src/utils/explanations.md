@@ -158,47 +158,11 @@ Heapify procedure can be applied to a node only if its children nodes are heapif
 Lets understand with the help of an example:
 
 ## Heap Sort Illustration
-Input data: 4, 10, 3, 5, 1
-         4(0)
-        /   \
-     10(1)   3(2)
-    /   \
- 5(3)    1(4)
-
-The numbers in bracket represent the indices in the array representation of data.
-
-Applying heapify procedure to index 1:
-         4(0)
-        /   \
-    10(1)    3(2)
-    /   \
-5(3)    1(4)
-
-Applying heapify procedure to index 0:
-        10(0)
-        /  \
-     5(1)  3(2)
-    /   \
- 4(3)    1(4)
+<img src="https://cdn.programiz.com/cdn/farfuture/VicaT2DyDXxbtM88OYklajepD4hkdSumEHTg2nBwe7s/mtime:1586942728/sites/tutorial2program/files/heap_sort.png" />
 The heapify procedure calls itself recursively to build heap in top down manner.
 
 # Bubble Sort
 Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in wrong order.
 
 ## Bubble Sort Illustration
-First Pass: 
-( 5 1 4 2 8 ) –> ( 1 5 4 2 8 ), Here, algorithm compares the first two elements, and swaps since 5 > 1. 
-( 1 5 4 2 8 ) –>  ( 1 4 5 2 8 ), Swap since 5 > 4 
-( 1 4 5 2 8 ) –>  ( 1 4 2 5 8 ), Swap since 5 > 2 
-( 1 4 2 5 8 ) –> ( 1 4 2 5 8 ), Now, since these elements are already in order (8 > 5), algorithm does not swap them.
-Second Pass: 
-( 1 4 2 5 8 ) –> ( 1 4 2 5 8 ) 
-( 1 4 2 5 8 ) –> ( 1 2 4 5 8 ), Swap since 4 > 2 
-( 1 2 4 5 8 ) –> ( 1 2 4 5 8 ) 
-( 1 2 4 5 8 ) –>  ( 1 2 4 5 8 ) 
-Now, the array is already sorted, but our algorithm does not know if it is completed. The algorithm needs one whole pass without any swap to know it is sorted.
-Third Pass: 
-( 1 2 4 5 8 ) –> ( 1 2 4 5 8 ) 
-( 1 2 4 5 8 ) –> ( 1 2 4 5 8 ) 
-( 1 2 4 5 8 ) –> ( 1 2 4 5 8 ) 
-( 1 2 4 5 8 ) –> ( 1 2 4 5 8 ) 
+<img src="https://miro.medium.com/max/776/1*7QsZkfrRGhAu5yxxeDdzsA.png" />
