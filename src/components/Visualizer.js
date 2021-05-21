@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { MergeSort } from '../utils/MergeSort'
 import { QuickSort } from '../utils/QuickSort'
+import { BubbleSort } from '../utils/BubbleSort'
 
 const Visualizer = () => {
     const [array, setArray] = useState([]);
@@ -36,11 +37,12 @@ const Visualizer = () => {
     }
 
     const bubbleSort = () => {
-
+        const sortedArray = BubbleSort(array);
+        console.log(sortedArray);
     }
 
     const selectionSort = () => {
-
+        
     }
 
     const insertionSort = () => {
