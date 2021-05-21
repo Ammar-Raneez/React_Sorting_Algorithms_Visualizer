@@ -1,6 +1,14 @@
+import { connect } from "react-redux";
 import styled from "styled-components"
 
-const BarRow = array => {
+const BarRow = props => {
+    const {
+        array,
+        currentBubble,
+        currentSwappers,
+        currentSorted,
+    } = props;
+
     return (
         <Container>
             {array.map((value, index) => (
@@ -10,7 +18,18 @@ const BarRow = array => {
     )
 }
 
-export default BarRow
+const mapStateToProps = state => ({
+    array: state.array,
+    currentBubble: state.currentBubble,
+    currentSwappers: state.currentSwappers,
+    currentSorted: state.currentSorted,
+})
+
+const mapDispatchToProps = () => dispatch => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarRow);
 
 const Container = styled.div `
     display: flex;
