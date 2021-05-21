@@ -1,11 +1,15 @@
+import { Provider } from 'react-redux';
 import styled from 'styled-components'
 import Visualizer from './components/Visualizer';
+import Store from './redux/Store';
 
 function App() {
   return (
-    <Container>
-      <Visualizer />
-    </Container>
+    <Provider store={Store}>
+      <Container>
+        <Visualizer />
+      </Container>
+    </Provider>
   );
 }
 
