@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import BarRow from './BarRow';
 import ButtonRow from './ButtonRow';
@@ -11,7 +12,15 @@ const Visualizer = () => {
     )
 }
 
-export default Visualizer
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchToProps = () => dispatch => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Visualizer);
 
 const Container = styled.div `
     display: flex;
