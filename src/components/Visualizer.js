@@ -6,6 +6,7 @@ import { QuickSort } from '../utils/QuickSort'
 import { BubbleSort } from '../utils/BubbleSort'
 import { SelectionSort } from '../utils/SelectionSort';
 import { InsertionSort } from '../utils/InsertionSort';
+import { HeapSort } from '../utils/HeapSort';
 
 const Visualizer = () => {
     const [array, setArray] = useState([]);
@@ -43,6 +44,11 @@ const Visualizer = () => {
         console.log(sortedArray);
     }
 
+    const heapSort = () => {
+        const sortedArray = HeapSort(array);
+        console.log(sortedArray);
+    }
+
     const selectionSort = () => {
         const sortedArray = SelectionSort(array);
         console.log(sortedArray);
@@ -59,6 +65,7 @@ const Visualizer = () => {
                 <Button onClick={resetArray}>New Array</Button>
                 <Button onClick={mergeSort}>Merge Sort</Button>
                 <Button onClick={quickSort}>Quick Sort</Button>
+                <Button onClick={heapSort}>Heap Sort</Button>
                 <Button onClick={bubbleSort}>Bubble Sort</Button>
                 <Button onClick={selectionSort}>Selection Sort</Button>
                 <Button onClick={insertionSort}>Insertion Sort</Button>
