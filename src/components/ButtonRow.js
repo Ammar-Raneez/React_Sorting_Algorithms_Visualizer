@@ -10,8 +10,8 @@ import { HeapSort } from '../utils/HeapSort';
 import { connect } from 'react-redux';
 import { setArray } from '../redux/actions/setArrayActions';
 import { setCurrentSorted } from '../redux/actions/alreadySortedActions';
-import { whichAlgorithm } from '../redux/reducers/whichAlgorithmReducer';
 import { setRunning } from '../redux/actions/isCurrentlyRunningActions';
+import { setAlgorithm } from '../redux/actions/whichAlgorithmActions';
 
 const ButtonRow = props => {
     const {
@@ -64,7 +64,7 @@ const mapDispatchToProps = () => dispatch => ({
     },
     
     updateAlgorithm: (algorithm) => {
-        dispatch(whichAlgorithm(algorithm));
+        dispatch(setAlgorithm(algorithm));
     },
     
     sort: (algorithm, array, speed) => {
