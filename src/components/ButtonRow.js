@@ -1,5 +1,6 @@
-import { Button } from '@material-ui/core';
-import { useEffect } from 'react';
+import { Button, Typography } from '@material-ui/core';
+import Slider from '@material-ui/core/Slider';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MergeSort } from '../utils/MergeSort'
 import { QuickSort } from '../utils/QuickSort'
@@ -13,43 +14,62 @@ import { setCurrentSorted } from '../redux/actions/alreadySortedActions';
 import { setRunning } from '../redux/actions/isCurrentlyRunningActions';
 import { setAlgorithm } from '../redux/actions/whichAlgorithmActions';
 
-const ButtonRow = props => {
-    const {
-        array,
-        algorithm,
-        isRunning,
-        generateArray,
-        updateAlgorithm,
-        sort
-    } = props
+const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgorithm, sort }) => {
+    const [arraySize, setArraySize] = useState(87);
 
+    const SLIDER_MARKERS = [
+        {
+            value: 0,
+            label: '0'
+        },
+        {
+            value: 50,
+            label: '50'
+        },
+        {
+            value: 100,
+            label: '100'
+        },
+    ]
+    
     useEffect(() => {
-        generateArray(87);
-    }, [])
+        generateArray(arraySize);
+    }, [arraySize, generateArray])
 
-    const speed = 570 - Math.pow(array.length, 2) > 0 ? 570 - Math.pow(array.length, 2) : 0;
+    const speed = 1;
+    // const speed = 570 - Math.pow(array.length, 2) > 0 ? 570 - Math.pow(array.length, 2) : 0;
     // const color = isRunning ? "rgba(214, 29, 29, 0.8)" : "white";
     // const cursor = isRunning ? "auto" : "pointer";
 
+    const changeArraySize = (event, value) => {
+        event.preventDefault();
+        setArraySize(value);
+    }
+
     return (
         <Container>
-            <Button onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
-            <Button onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
+            <div>
+                <Typography>Array Size</Typography>
+                <Slider marks={SLIDER_MARKERS} disabled={isRunning} defaultValue={arraySize} min={0} max={100} onChange={changeArraySize} />
+            </div>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
+            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
             {
-                algorithm && <Button onClick={() => !isRunning && sort(algorithm, array, speed)}>Sort</Button>
+                whichAlgorithm && <Button disabled={isRunning} onClick={() => !isRunning && sort(whichAlgorithm, array, speed)}>Sort</Button>
             }
         </Container>
     )
 }
 
 const mapStateToProps = state => ({
+    state: state,
     array: state.array,
-    algorithm: state.currentBubble,
+    whichAlgorithm: state.whichAlgorithm,
     isRunning: state.isRunning
 })
 
