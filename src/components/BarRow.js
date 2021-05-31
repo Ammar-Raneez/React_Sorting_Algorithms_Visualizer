@@ -1,16 +1,10 @@
 import { connect } from "react-redux";
 import styled from "styled-components"
 
-const BarRow = props => {
-    const {
-        array,
-        currentBubble,
-        currentSwappers,
-        currentSorted,
-    } = props;
+const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
+    const numWidth = Math.floor(document.body.clientWidth / (array.length * 3));
 
-    const numWidth = Math.floor(document.width / (array.length * 3));
-    const width = `${numWidth}px`;
+    const width = `1000`;
     const numMargin = array.length < 5 ?
         10 : array.length < 8 ?
             8 : array.length < 11 ?
@@ -72,13 +66,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(BarRow);
 const Container = styled.div `
     display: flex;
 `
-const ArrayBar = styled.div `
-    height: ${props => props.height}px;
-    width: ${props => props.width}px;
-    background-color: ${props => props.backgroundColor};
-    display: inline-block;
-    color: ${props => props.color};
-    font-size: ${props => props.fontSize};
-    margin-left: ${props => props.marginLeft};
-    margin-right: ${props => props.marginRight};
-`
+const ArrayBar = styled.div.attrs(props => ({
+    style: {
+        height: props.height + 'px',
+        width: props.width + 'px',
+        backgroundColor: props.backgroundColor,
+        color: props.color,
+        marginLeft: props.marginLeft,
+        marginRight: props.marginRight,
+        fontSize: props.fontSize,
+    },
+})) `display: inline-block;`

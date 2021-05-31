@@ -15,20 +15,20 @@ import { setRunning } from '../redux/actions/isCurrentlyRunningActions';
 import { setAlgorithm } from '../redux/actions/whichAlgorithmActions';
 
 const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgorithm, sort }) => {
-    const [arraySize, setArraySize] = useState(87);
+    const [arraySize, setArraySize] = useState(75);
 
     const SLIDER_MARKERS = [
         {
-            value: 0,
-            label: '0'
+            value: 25,
+            label: '25'
         },
         {
             value: 50,
             label: '50'
         },
         {
-            value: 100,
-            label: '100'
+            value: 75,
+            label: '75'
         },
     ]
     
@@ -36,10 +36,7 @@ const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgo
         generateArray(arraySize);
     }, [arraySize, generateArray])
 
-    const speed = 1;
-    // const speed = 570 - Math.pow(array.length, 2) > 0 ? 570 - Math.pow(array.length, 2) : 0;
-    // const color = isRunning ? "rgba(214, 29, 29, 0.8)" : "white";
-    // const cursor = isRunning ? "auto" : "pointer";
+    const speed = 570 - Math.pow(array.length, 2) > 0 ? 570 - Math.pow(array.length, 2) : 0;
 
     const changeArraySize = (event, value) => {
         event.preventDefault();
@@ -49,16 +46,19 @@ const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgo
     return (
         <Container>
             <Button disabled={isRunning} onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
+
             <div>
                 <Typography>Array Size</Typography>
-                <Slider marks={SLIDER_MARKERS} disabled={isRunning} defaultValue={arraySize} min={0} max={100} onChange={changeArraySize} />
+                <Slider key={101} marks={SLIDER_MARKERS} disabled={isRunning} value={arraySize} min={10} max={75} onChange={changeArraySize} />
             </div>
+
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
             <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
+
             {
                 whichAlgorithm && <Button disabled={isRunning} onClick={() => !isRunning && sort(whichAlgorithm, array, speed)}>Sort</Button>
             }
