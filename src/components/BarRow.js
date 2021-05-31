@@ -3,26 +3,27 @@ import styled from "styled-components"
 
 const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
     const numWidth = Math.floor(document.body.clientWidth / (array.length * 3));
-
     const width = `1000`;
+
     const numMargin = array.length < 5 ?
-        10 : array.length < 8 ?
-            8 : array.length < 11 ?
-                6 : array.length < 20 ?
-                    4 : array.length < 50 ?
-                        3.5 : array.length < 100 ?
-                                3 : array.length < 130 ?
-                                    2.5 : 2;
-    const margin = `${numMargin}px`;
-    const color = numWidth > 20 ? "white" : "transparent";
+        1 : array.length < 0.8 ?
+            0.8 : array.length < 111 ?
+                0.6 : array.length < 0.20 ?
+                    0.4 : array.length < 5 ?
+                        0.35 : array.length < 10 ?
+                                0.3 : array.length < 13 ?
+                                    0.25 : 0.2;
     const numFont = numWidth > 70 ?
-        20 : numWidth > 60 ?
-            18 : numWidth > 50 ?
-                16 : numWidth > 40 ?
-                    14 : numWidth > 30 ?
-                        12 : numWidth > 20 ?
-                            10 : 8;
-    const fontSize = `${numFont}px`
+    2 : numWidth > 6 ?
+        1.8 : numWidth > 5 ?
+            1.6 : numWidth > 4 ?
+                1.4 : numWidth > 3 ?
+                    1.2 : numWidth > 2 ?
+                        1 : 0.8;
+
+    const margin = `${numMargin}vw`;
+    const color = numWidth > 20 ? "white" : "transparent";
+    const fontSize = `${numFont}vw`
 
     return (
         <Container>
@@ -42,7 +43,7 @@ const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
                     color = {color}
                     fontSize = {fontSize}
                 >
-                    {number}
+                    {color !== 'transparent' && number}
                 </ArrayBar>
             )}) : null
             }
@@ -76,4 +77,7 @@ const ArrayBar = styled.div.attrs(props => ({
         marginRight: props.marginRight,
         fontSize: props.fontSize,
     },
-})) `display: inline-block;`
+})) `
+    display: inline-block;
+    text-align: center;
+`
