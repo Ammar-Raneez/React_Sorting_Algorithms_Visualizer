@@ -45,23 +45,32 @@ const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgo
 
     return (
         <Container>
-            <Button disabled={isRunning} onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
+            <LeftContainer>
+                <Button disabled={isRunning} onClick={() => !isRunning && generateArray(array.length)}>New Array</Button>
 
-            <div>
-                <Typography>Array Size</Typography>
-                <Slider key={101} marks={SLIDER_MARKERS} disabled={isRunning} value={arraySize} min={10} max={75} onChange={changeArraySize} />
-            </div>
+                <div>
+                    <Typography>Size & Speed</Typography>
+                    <Slider key={101} marks={SLIDER_MARKERS} disabled={isRunning} value={arraySize} min={10} max={75} onChange={changeArraySize} />
+                </div>
+            </LeftContainer>
 
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
-            <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
+            <CenterContainer>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
+                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("insertionSort")}>Insertion Sort</Button>
+            </CenterContainer>
 
-            {
-                whichAlgorithm && <Button disabled={isRunning} onClick={() => !isRunning && sort(whichAlgorithm, array, speed)}>Sort</Button>
-            }
+            <RightContainer>
+                {
+                    <Button disabled={!isRunning} onClick={() => isRunning && sort(whichAlgorithm, array, speed, true)}>Reset</Button>
+                }
+                {
+                    <Button disabled={isRunning || !whichAlgorithm} onClick={() => !isRunning && sort(whichAlgorithm, array, speed, false)}>Sort</Button>
+                }
+            </RightContainer>
         </Container>
     )
 }
@@ -87,16 +96,20 @@ const mapDispatchToProps = () => dispatch => ({
         dispatch(setAlgorithm(algorithm));
     },
     
-    sort: (algorithm, array, speed) => {
-        let doSort = algorithm === "bubbleSort" ? BubbleSort 
-                            : algorithm === "insertionSort" ? InsertionSort 
-                                : algorithm === "selectionSort" ? SelectionSort 
-                                    : algorithm === "mergeSort" ? MergeSort 
-                                        : algorithm === "quickSort" ? QuickSort
-                                            : HeapSort;
-        dispatch(setCurrentSorted([]));
-        dispatch(setRunning(true));
-        doSort(array, dispatch, speed);
+    sort: (algorithm, array, speed, reset) => {
+        if (!reset) {
+            let doSort = algorithm === "bubbleSort" ? BubbleSort 
+            : algorithm === "insertionSort" ? InsertionSort 
+                : algorithm === "selectionSort" ? SelectionSort 
+                    : algorithm === "mergeSort" ? MergeSort 
+                        : algorithm === "quickSort" ? QuickSort
+                            : HeapSort;
+            dispatch(setCurrentSorted([]));
+            dispatch(setRunning(true));
+            doSort(array, dispatch, speed);
+        } else {
+            dispatch(setRunning(false));
+        }
     },
 });
 
@@ -104,4 +117,39 @@ export default connect(mapStateToProps, mapDispatchToProps)(ButtonRow);
 
 const Container = styled.div `
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const LeftContainer = styled.div `
+    display: flex;
+    flex: 0.2;
+
+    > button {
+        flex: 0.4;
+    }
+
+    > div {
+        flex: 0.6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        > p {
+            font-size: 1vw;
+            color: #aaa;
+        }
+    }
+`
+
+const CenterContainer = styled.div `
+    flex: 0.6;
+    display: flex;
+    justify-content: center;
+`
+
+const RightContainer = styled.div `
+    flex: 0.2;
+    display: flex;
+    justify-content: flex-end;
 `
