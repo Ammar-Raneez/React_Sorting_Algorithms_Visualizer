@@ -35,7 +35,7 @@ const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
             return (
                 <ArrayBar
                     key = {index}
-                    height = {number * 3}
+                    height = {number / 5.5}
                     width = {width}
                     marginLeft = {margin}
                     marginRight = {margin}
@@ -69,8 +69,8 @@ const Container = styled.div `
 `
 const ArrayBar = styled.div.attrs(props => ({
     style: {
-        height: props.height + 'px',
-        width: props.width + 'px',
+        height: props.height + 'vw',
+        width: props.width + 'vw',
         backgroundColor: props.backgroundColor,
         color: props.color,
         marginLeft: props.marginLeft,
