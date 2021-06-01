@@ -65,10 +65,10 @@ const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgo
 
             <RightContainer>
                 {
-                    <Button disabled={!isRunning} onClick={() => isRunning && sort(whichAlgorithm, array, speed, true)}>Reset</Button>
+                    <Button disabled={!isRunning} onClick={() => isRunning && window.location.reload(false)}>Reset</Button>
                 }
                 {
-                    <Button disabled={isRunning || !whichAlgorithm} onClick={() => !isRunning && sort(whichAlgorithm, array, speed, false)}>Sort</Button>
+                    <Button disabled={isRunning || !whichAlgorithm} onClick={() => !isRunning && sort(whichAlgorithm, array, speed)}>Sort</Button>
                 }
             </RightContainer>
         </Container>
@@ -96,20 +96,17 @@ const mapDispatchToProps = () => dispatch => ({
         dispatch(setAlgorithm(algorithm));
     },
     
-    sort: (algorithm, array, speed, reset) => {
-        if (!reset) {
-            let doSort = algorithm === "bubbleSort" ? BubbleSort 
-            : algorithm === "insertionSort" ? InsertionSort 
-                : algorithm === "selectionSort" ? SelectionSort 
-                    : algorithm === "mergeSort" ? MergeSort 
-                        : algorithm === "quickSort" ? QuickSort
-                            : HeapSort;
-            dispatch(setCurrentSorted([]));
-            dispatch(setRunning(true));
-            doSort(array, dispatch, speed);
-        } else {
-            dispatch(setRunning(false));
-        }
+    sort: (algorithm, array, speed) => {
+        let doSort = algorithm === "bubbleSort" ? BubbleSort 
+        : algorithm === "insertionSort" ? InsertionSort 
+            : algorithm === "selectionSort" ? SelectionSort 
+                : algorithm === "mergeSort" ? MergeSort 
+                    : algorithm === "quickSort" ? QuickSort
+                        : algorithm === "HeapSort" ? HeapSort
+                            : Error("Error");
+        dispatch(setCurrentSorted([]));
+        dispatch(setRunning(true));
+        doSort(array, dispatch, speed);
     },
 });
 
