@@ -1,7 +1,14 @@
 import { connect } from "react-redux";
 import styled from "styled-components"
 
-const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
+const BarRow = ({ array, 
+                currentBubble, 
+                currentHeap, 
+                currentSelection, 
+                currentMerge, 
+                currentInsertion, 
+                currentSwappers, 
+                currentSorted }) => {
     const numWidth = Math.floor(document.body.clientWidth / (array.length * 3));
     const width = `1000`;
 
@@ -27,25 +34,30 @@ const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
 
     return (
         <Container>
-            { array.length ? array.map((number, index) => {
-            const backgroundColor = currentSwappers.includes(index) ?
-                "rgba(219, 57, 57, 0.8)" : currentBubble.includes(index) ?
-                    "rgba(78, 216, 96, 0.8)" : currentSorted.includes(index) ?
-                        "rgba(169, 92, 232, 0.8)" : "rgba(66, 134, 244, 0.8)";
-            return (
-                <ArrayBar
-                    key = {index}
-                    height = {number / 5.5}
-                    width = {width}
-                    marginLeft = {margin}
-                    marginRight = {margin}
-                    backgroundColor = {backgroundColor}
-                    color = {color}
-                    fontSize = {fontSize}
-                >
-                    {color !== 'transparent' && number}
-                </ArrayBar>
-            )}) : null
+            { 
+                array.length ? array.map((number, index) => {
+                    const backgroundColor = currentSwappers.includes(index) ?
+                        "rgba(219, 57, 57, 0.8)" : currentBubble.includes(index) ||
+                            currentSelection.includes(index) || currentInsertion.includes(index) ||
+                                currentHeap.includes(index) || currentMerge.includes(index) ?
+                                    "rgba(78, 216, 96, 0.8)" : currentSorted.includes(index) ?
+                                            "rgba(169, 92, 232, 0.8)" : "rgba(66, 134, 244, 0.8)";
+
+                    return (
+                        <ArrayBar
+                            key = {index}
+                            height = {number / 5.5}
+                            width = {width}
+                            marginLeft = {margin}
+                            marginRight = {margin}
+                            backgroundColor = {backgroundColor}
+                            color = {color}
+                            fontSize = {fontSize}
+                        >
+                            {color !== 'transparent' && number}
+                        </ArrayBar>
+                    )
+                }) : null
             }
         </Container>
     )
@@ -54,6 +66,10 @@ const BarRow = ({ array, currentBubble, currentSwappers, currentSorted }) => {
 const mapStateToProps = state => ({
     array: state.array,
     currentBubble: state.currentBubble,
+    currentHeap: state.currentHeap,
+    currentInsertion: state.currentInsertion,
+    currentSelection: state.currentSelection,
+    currentMerge: state.currentMerge,
     currentSwappers: state.currentSwappers,
     currentSorted: state.currentSorted,
 })
