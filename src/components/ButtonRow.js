@@ -3,7 +3,6 @@ import Slider from '@material-ui/core/Slider';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MergeSort } from '../utils/MergeSort'
-import { QuickSort } from '../utils/QuickSort'
 import { BubbleSort } from '../utils/BubbleSort'
 import { SelectionSort } from '../utils/SelectionSort';
 import { InsertionSort } from '../utils/InsertionSort';
@@ -101,7 +100,6 @@ const mapDispatchToProps = () => dispatch => ({
         : algorithm === "insertionSort" ? InsertionSort 
             : algorithm === "selectionSort" ? SelectionSort 
                 : algorithm === "mergeSort" ? MergeSort 
-                    : algorithm === "quickSort" ? QuickSort
                         : algorithm === "HeapSort" ? HeapSort
                             : Error("Error");
         dispatch(setCurrentSorted([]));
