@@ -56,7 +56,7 @@ const ButtonRow = ({ array, whichAlgorithm, isRunning, generateArray, updateAlgo
 
             <CenterContainer>
                 <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("mergeSort")}>Merge Sort</Button>
-                <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button>
+                {/* <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("quickSort")}>Quick Sort</Button> */}
                 <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("heapSort")}>Heap Sort</Button>
                 <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("bubbleSort")}>Bubble Sort</Button>
                 <Button disabled={isRunning} onClick={() => !isRunning && updateAlgorithm("selectionSort")}>Selection Sort</Button>
